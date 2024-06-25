@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:my_app/app/app.bottomsheets.dart';
@@ -10,12 +11,17 @@ import '../helpers/test_helpers.dart';
 void main() {
   HomeViewModel getModel() => HomeViewModel();
 
-  group('HomeViewmodelTest -', () {
-    setUp(() => registerServices());
-    tearDown(() => locator.reset());
+  group('HomeViewModelTest -', () {
+    setUp(() {
+      registerServices();
+    });
+
+    tearDown(() {
+      locator.reset();
+    });
 
     group('incrementCounter -', () {
-      test('When called once should return  Counter is: 1', () {
+      test('When called once should return "Counter is: 1"', () {
         final model = getModel();
         model.incrementCounter();
         expect(model.counterLabel, 'Counter is: 1');
@@ -26,7 +32,6 @@ void main() {
       test('When called, should show custom bottom sheet using notice variant',
           () {
         final bottomSheetService = getAndRegisterBottomSheetService();
-
         final model = getModel();
         model.showBottomSheet();
         verify(bottomSheetService.showCustomSheet(
@@ -34,6 +39,18 @@ void main() {
           title: ksHomeBottomSheetTitle,
           description: ksHomeBottomSheetDescription,
         ));
+      });
+    });
+
+    group('Button Color Toggle Test', () {
+      test('Toggle button color from blue to red and vice versa', () {
+        var viewModel = HomeViewModel();
+
+        viewModel.onNewButtonPressed();
+        expect(viewModel.buttonColor, equals(Colors.red));
+
+        viewModel.onNewButtonPressed();
+        expect(viewModel.buttonColor, equals(Colors.blue));
       });
     });
   });

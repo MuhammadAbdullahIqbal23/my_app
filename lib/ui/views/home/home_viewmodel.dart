@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:my_app/app/app.bottomsheets.dart';
 import 'package:my_app/app/app.dialogs.dart';
 import 'package:my_app/app/app.locator.dart';
@@ -12,6 +13,9 @@ class HomeViewModel extends BaseViewModel {
   String get counterLabel => 'Counter is: $_counter';
 
   int _counter = 0;
+  Color _buttonColor = Colors.blue;
+
+  Color get buttonColor => _buttonColor;
 
   void incrementCounter() {
     _counter++;
@@ -32,5 +36,10 @@ class HomeViewModel extends BaseViewModel {
       title: ksHomeBottomSheetTitle,
       description: ksHomeBottomSheetDescription,
     );
+  }
+
+  void onNewButtonPressed() {
+    _buttonColor = _buttonColor == Colors.blue ? Colors.red : Colors.blue;
+    rebuildUi();
   }
 }
